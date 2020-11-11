@@ -2,7 +2,9 @@ package com.wanhao.shardingjdbc;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wanhao.shardingjdbc.bean.Course;
+import com.wanhao.shardingjdbc.bean.User;
 import com.wanhao.shardingjdbc.mapper.CourseMapper;
+import com.wanhao.shardingjdbc.mapper.UserMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,27 @@ import java.util.List;
 public class ShardingJdbcApplicationTests {
     @Autowired
     private CourseMapper courseMapper;
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Test
+    public void addUserDb() {
+        User user = new User();
+        user.setUsername("admin");
+        user.setUstatus("a");
+        userMapper.insert(user);
+    }
+
+    //查询操作
+    @Test
+    public void findUserDb() {
+        QueryWrapper<User>  wrapper = new QueryWrapper<>();
+        //设置userid值
+        wrapper.eq("user_id",533320755018989569L);
+        User user = userMapper.selectOne(wrapper);
+        System.out.println(user);
+    }
 
     //添加操作
     @Test
@@ -36,7 +59,7 @@ public class ShardingJdbcApplicationTests {
     public void findCourseDb() {
         QueryWrapper<Course> wrapper = new QueryWrapper<>();
         //设置userid值
-        wrapper.eq("user_id", 1L);
+        //wrapper.eq("user_id", 1L);
         //设置cid值
         //wrapper.eq("cid", 465162909769531393L);
         List<Course> courses = courseMapper.selectList(wrapper);
