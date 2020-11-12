@@ -2,8 +2,10 @@ package com.wanhao.shardingjdbc;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wanhao.shardingjdbc.bean.Course;
+import com.wanhao.shardingjdbc.bean.SystemDict;
 import com.wanhao.shardingjdbc.bean.User;
 import com.wanhao.shardingjdbc.mapper.CourseMapper;
+import com.wanhao.shardingjdbc.mapper.SystemDictMapper;
 import com.wanhao.shardingjdbc.mapper.UserMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +23,26 @@ public class ShardingJdbcApplicationTests {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private SystemDictMapper dictMapper;
+
+    @Test
+    public void addDict() {
+        SystemDict udict = new SystemDict();
+        udict.setUstatus("a");
+        udict.setUvalue("已启用");
+        dictMapper.insert(udict);
+    }
+
+    //删除操作
+    @Test
+    public void deleteDict() {
+        QueryWrapper<SystemDict>  wrapper = new QueryWrapper<>();
+        //设置userid值
+        wrapper.eq("dictid",465191484111454209L);
+        dictMapper.delete(wrapper);
+    }
+
 
     @Test
     public void addUserDb() {
